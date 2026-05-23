@@ -11,7 +11,12 @@ interface AnimatedCounterProps {
 	duration?: number;
 }
 
-export function AnimatedCounter({ value, suffix = '', className, duration = 1.2 }: AnimatedCounterProps) {
+export function AnimatedCounter({
+	value,
+	suffix = '',
+	className,
+	duration = 1.2,
+}: AnimatedCounterProps) {
 	const ref = useRef<HTMLSpanElement>(null);
 	const isInView = useInView(ref, { once: true, margin: '-80px' });
 	const motionValue = useMotionValue(0);

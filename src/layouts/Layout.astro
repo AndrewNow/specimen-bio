@@ -15,14 +15,14 @@ const {
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
+		<link rel="apple-touch-icon" sizes="256x256" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
 	</head>
-	<body class="min-h-dvh bg-background font-sans text-foreground antialiased">
+	<body class="bg-background text-foreground min-h-dvh font-sans antialiased">
 		<div class="root">
 			<slot />
 		</div>

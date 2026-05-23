@@ -23,7 +23,12 @@ function FeatureList({ items }: { items: string[] }) {
 		<ul className="mt-6 space-y-2">
 			{items.map((item) => (
 				<li key={item} className="text-foreground-primary flex items-start gap-2 text-sm">
-					<Check size={16} className="mt-0.5 shrink-0 text-foreground" aria-hidden="true" strokeWidth={2} />
+					<Check
+						size={16}
+						className="text-foreground mt-0.5 shrink-0"
+						aria-hidden="true"
+						strokeWidth={2}
+					/>
 					{item}
 				</li>
 			))}
@@ -41,13 +46,16 @@ export function DualAudience() {
 							id="demand"
 							className="flex h-full flex-col transition-transform duration-200 hover:-translate-y-1"
 						>
-							<MicroscopeIcon size={48} className="text-foreground mb-6" strokeWidth={1} aria-hidden="true" />
-							<h3 className="text-foreground tracking-tight text-3xl">
-								For sponsors
-							</h3>
+							<MicroscopeIcon
+								size={48}
+								className="text-foreground mb-6"
+								strokeWidth={1}
+								aria-hidden="true"
+							/>
+							<h3 className="text-foreground text-3xl tracking-tight">For sponsors</h3>
 							<p className="text-foreground-secondary mt-4 text-base leading-relaxed">
-								Pharma, diagnostic, biotech, and device companies use us to source samples from biomarker work
-								through regulatory filings.
+								Pharma, diagnostic, biotech, and device companies use us to source samples from
+								biomarker work through regulatory filings.
 							</p>
 							<FeatureList items={demandFeatures} />
 							<div className="mt-auto w-full pt-8">
@@ -68,13 +76,17 @@ export function DualAudience() {
 							id="supply"
 							className="flex h-full flex-col transition-transform duration-200 hover:-translate-y-1"
 						>
-							<Hospital01Icon size={48} className="text-foreground mb-6" strokeWidth={1} aria-hidden="true" />
-							<h3 className="text-foreground tracking-tight text-3xl">
-								For providers
-							</h3>
+							<Hospital01Icon
+								size={48}
+								className="text-foreground mb-6"
+								strokeWidth={1}
+								aria-hidden="true"
+							/>
+							<h3 className="text-foreground text-3xl tracking-tight">For providers</h3>
 							<p className="text-foreground-secondary mt-4 text-base leading-relaxed">
-								We work with clinics, hospitals, pathology and diagnostic labs, biobanks, and biorepositories.
-								We connect qualified sites with end users and help them run compliant collections.
+								We work with clinics, hospitals, pathology and diagnostic labs, biobanks, and
+								biorepositories. We connect qualified sites with end users and help them run
+								compliant collections.
 							</p>
 							<FeatureList items={supplyFeatures} />
 							<div className="mt-auto w-full pt-8">

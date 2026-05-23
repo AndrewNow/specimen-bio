@@ -20,7 +20,7 @@ export function ClosingCTA() {
 						<Button
 							variant="solid"
 							size="lg"
-							className="bg-white text-foreground hover:bg-white/90 hover:opacity-100"
+							className="text-foreground bg-white hover:bg-white/90 hover:opacity-100"
 							trailingIcon={<ArrowRight size={18} aria-hidden="true" />}
 						>
 							Request Biospecimens

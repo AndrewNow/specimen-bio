@@ -1,6 +1,7 @@
 import { BlurFade } from '../motion/BlurFade';
 import { Badge } from '../ui/Badge';
 import { SectionWrapper } from '../ui/SectionWrapper';
+import { cn } from '../../lib/utils';
 
 const steps = [
 	{
@@ -50,20 +51,28 @@ export function Process() {
 				</div>
 
 				<div className="relative mx-auto max-w-3xl">
-					<div className="absolute top-0 bottom-0 left-4 w-px bg-border md:left-[15px]" aria-hidden="true" />
 					<ol className="space-y-10">
 						{steps.map((step, i) => (
-							<BlurFade key={step.title} delay={i * 0.05}>
-								<li className="relative flex gap-6 pl-12 md:pl-14">
-									<span className="absolute left-0 flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background font-mono text-sm text-muted">
-										{i + 1}
-									</span>
+							<li
+								key={step.title}
+								className={cn(
+									'relative pl-12 md:pl-14',
+									i < steps.length - 1 &&
+										"after:bg-border after:pointer-events-none after:absolute after:top-8 after:left-4 after:w-px after:content-[''] after:h-[calc(100%-2rem+2.5rem)]",
+								)}
+							>
+								<span className="outline-2 outline-white border-border bg-background text-secondary absolute top-0 left-0 z-10 flex h-8 w-8 items-center justify-center rounded-full border font-mono text-sm">
+									{i + 1}
+								</span>
+								<BlurFade delay={i * 0.05}>
 									<div>
 										<h3 className="text-foreground">{step.title}</h3>
-										<p className="text-foreground-secondary mt-2 text-base leading-relaxed">{step.body}</p>
+										<p className="text-foreground-secondary mt-2 text-base leading-relaxed">
+											{step.body}
+										</p>
 									</div>
-								</li>
-							</BlurFade>
+								</BlurFade>
+							</li>
 						))}
 					</ol>
 				</div>

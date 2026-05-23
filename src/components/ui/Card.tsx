@@ -14,7 +14,8 @@ const cardVariants = cva('rounded-2xl p-6 md:p-8', {
 	},
 });
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
+export interface CardProps
+	extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
 	featured?: boolean;
 }
 

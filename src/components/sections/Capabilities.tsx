@@ -23,7 +23,7 @@ const capabilityCards = [
 
 export function Capabilities() {
 	return (
-		<section className="relative overflow-hidden border-y border-border bg-surface">
+		<section className="border-border bg-surface relative overflow-hidden border-y">
 			<SwissGrid />
 			<SectionWrapper className="relative z-10">
 				<div className="max-w-xl">
@@ -36,34 +36,46 @@ export function Capabilities() {
 					</p>
 				</div>
 
-				<div className="mt-12 grid grid-cols-1 gap-8 border-t border-border pt-12 sm:grid-cols-3">
+				<div className="border-border mt-12 grid grid-cols-1 gap-8 border-t pt-12 sm:grid-cols-3">
 					<BlurFade>
 						<div>
-							<AnimatedCounter value={16} className="text-foreground text-5xl tracking-tight md:text-6xl" />
-							<p className="mt-1 text-sm text-muted">Disease areas</p>
+							<AnimatedCounter
+								value={16}
+								className="text-foreground text-5xl tracking-tight md:text-6xl"
+							/>
+							<p className="text-secondary mt-1 text-sm">Disease areas</p>
 						</div>
 					</BlurFade>
 					<BlurFade delay={0.1}>
 						<div>
-							<AnimatedCounter value={19} suffix="+" className="text-foreground text-5xl tracking-tight md:text-6xl" />
-							<p className="mt-1 text-sm text-muted">Sample types</p>
+							<AnimatedCounter
+								value={19}
+								suffix="+"
+								className="text-foreground text-5xl tracking-tight md:text-6xl"
+							/>
+							<p className="text-secondary mt-1 text-sm">Sample types</p>
 						</div>
 					</BlurFade>
 					<BlurFade delay={0.2}>
 						<div>
-							<AnimatedCounter value={13} className="text-foreground text-5xl tracking-tight md:text-6xl" />
-							<p className="mt-1 text-sm text-muted">Source countries</p>
+							<AnimatedCounter
+								value={13}
+								className="text-foreground text-5xl tracking-tight md:text-6xl"
+							/>
+							<p className="text-secondary mt-1 text-sm">Source countries</p>
 						</div>
 					</BlurFade>
 				</div>
 
-				<div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+				<div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
 					{capabilityCards.map((card, i) => (
-						<BlurFade key={card.title} delay={0.1 * i}>
-							<Card variant="outline">
+						<BlurFade key={card.title} delay={0.1 * i} className="h-full">
+							<Card variant="outline" className="h-full">
 								<card.icon size={20} className="text-foreground mb-4" aria-hidden="true" />
 								<h3 className="text-foreground">{card.title}</h3>
-								<p className="text-foreground-secondary mt-3 text-sm leading-relaxed">{card.body}</p>
+								<p className="text-foreground-secondary mt-3 text-sm leading-relaxed">
+									{card.body}
+								</p>
 							</Card>
 						</BlurFade>
 					))}

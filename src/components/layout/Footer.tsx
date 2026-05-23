@@ -5,7 +5,7 @@ const serviceLinks = ['Supply', 'Demand', 'Request Biospecimens'];
 
 export function Footer() {
 	return (
-		<footer className="border-t border-white/10 bg-foreground text-background">
+		<footer className="bg-foreground text-background border-t border-white/10">
 			<div className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:px-16">
 				<div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
 					<div>
@@ -49,7 +49,10 @@ export function Footer() {
 						<p className="text-xs font-medium tracking-wide text-white/40">Contact</p>
 						<ul className="mt-4 space-y-2 text-sm text-white/60">
 							<li>
-								<a href="mailto:info@specimenbio.com" className="transition-colors hover:text-white">
+								<a
+									href="mailto:info@specimenbio.com"
+									className="transition-colors hover:text-white"
+								>
 									info@specimenbio.com
 								</a>
 							</li>

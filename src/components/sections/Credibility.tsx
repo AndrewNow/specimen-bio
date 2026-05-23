@@ -21,22 +21,25 @@ export function Credibility() {
 					<BlurFade>
 						<div>
 							<Badge>Leadership</Badge>
-							<h2 className="text-foreground mt-6 text-3xl tracking-tight md:text-4xl">
-								25+ years
-								<br />
-								in the field
+							<h2 className="text-foreground mt-6 text-4xl tracking-tight">
+								25+ years in the field
 							</h2>
 							<p className="text-foreground-secondary mt-6 text-base leading-relaxed md:text-lg">
-								Peter M. Nowacki founded Specimen Bio after twenty-plus years in biospecimen leadership,
-								including General Manager of the Biospecimen Procurement Business Unit at Azenta Life Sciences
-								and COO at Trans-Hit Biomarkers.
+								Peter M. Nowacki founded Specimen Bio after twenty-plus years in biospecimen
+								leadership, including General Manager of the Biospecimen Procurement Business Unit
+								at Azenta Life Sciences and COO at Trans-Hit Biomarkers.
 							</p>
 							<p className="text-foreground-secondary mt-4 text-base leading-relaxed md:text-lg">
-								Specimen Bio fills the gap he kept seeing: accountable ownership from first call to confirmed
-								delivery.
+								Specimen Bio fills the gap he kept seeing: accountable ownership from first call to
+								confirmed delivery.
 							</p>
 							<div className="mt-8">
-								<Button variant="ghost" size="md" trailingIcon={<ArrowRight size={16} aria-hidden="true" />}>
+								<Button
+									variant="ghost"
+									size="md"
+									className='-translate-x-3'
+									trailingIcon={<ArrowRight size={16} aria-hidden="true" />}
+								>
 									About the team
 								</Button>
 							</div>
@@ -45,17 +48,27 @@ export function Credibility() {
 
 					<BlurFade delay={0.15}>
 						<Card featured className="bg-surface p-8">
-							<div className="h-14 w-14 rounded-full bg-border" aria-hidden="true" />
-							<p className="text-foreground mt-6 text-lg">Peter M. Nowacki</p>
-							<p className="text-foreground-secondary text-sm">Founder & CEO, Specimen Bio</p>
+							<div className="flex items-center gap-4">
+								<img
+									src="/peter.jpg"
+									alt="Peter M. Nowacki"
+									className="h-14 w-14 rounded-full object-cover object-center"
+									width={56}
+									height={56}
+								/>
+								<div className="flex flex-col">
+									<p className="text-foreground text-lg">Peter M. Nowacki</p>
+									<p className="text-foreground-secondary text-sm">Founder & CEO, Specimen Bio</p>
+								</div>
+							</div>
 							<Divider className="my-6" />
 							<ul>
 								{attributes.map(({ icon: Icon, text }) => (
 									<li
 										key={text}
-										className="text-foreground-secondary flex items-center gap-3 border-b border-border py-3 text-sm last:border-0"
+										className="text-foreground-secondary border-border flex items-center gap-3 border-b py-3 text-sm last:border-0"
 									>
-										<Icon size={14} className="shrink-0 text-muted" aria-hidden="true" />
+										<Icon size={14} className="text-secondary shrink-0" aria-hidden="true" />
 										{text}
 									</li>
 								))}

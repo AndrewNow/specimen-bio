@@ -1,15 +1,16 @@
-@import "tailwindcss";
-@import "inter-ui/inter-display-latin.css";
+@import 'tailwindcss';
+@import 'inter-ui/inter-display-latin.css';
 
 @theme {
-	--font-sans: "InterDisplay", ui-sans-serif, system-ui, sans-serif;
-	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+	--font-sans: 'InterDisplay', ui-sans-serif, system-ui, sans-serif;
+	--font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
 	--color-background: #ffffff;
-	--color-surface: #F9F8F6;
-	--color-orange: #E64900;
+	--color-surface: #f9f8f6;
+	--color-orange: #ff4901;
 	--color-border: #e5e5e5;
-	--color-muted: #CECECE;
+	--color-muted: #cecece;
+	--color-secondary: #666666;
 	--color-foreground: #0a0a0a;
 	--color-foreground-secondary: #919191;
 }
@@ -22,6 +23,39 @@
 /* Base UI: iOS 26+ Safari backdrop positioning */
 body {
 	position: relative;
+}
+
+/* Progressive blur for fixed nav (mask + backdrop-filter) */
+.nav-blur-backdrop {
+	pointer-events: none;
+	position: absolute;
+	inset-inline: 0;
+	top: 0;
+	height: 8rem;
+	background: linear-gradient(to bottom, var(--color-background), transparent);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	mask-image: linear-gradient(to bottom, #000, #000, transparent);
+	-webkit-mask-image: linear-gradient(to bottom, #000, #000, transparent);
+}
+
+@media (min-width: 1024px) {
+	.nav-blur-backdrop {
+		height: 6rem;
+		background: linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--color-background) 75%, transparent),
+			transparent
+		);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nav-blur-backdrop {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		background: linear-gradient(to bottom, var(--color-background), transparent);
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {

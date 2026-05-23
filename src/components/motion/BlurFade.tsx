@@ -32,8 +32,7 @@ export function BlurFade({
 
 	const offset = 12;
 	const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
-	const value =
-		direction === 'right' || direction === 'down' ? -offset : offset;
+	const value = direction === 'right' || direction === 'down' ? -offset : offset;
 
 	if (prefersReducedMotion) {
 		return <div className={className}>{children}</div>;
