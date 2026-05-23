@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@import "inter-ui/inter-display-latin.css";
+
+@theme {
+	--font-sans: "InterDisplay", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+	--color-background: #ffffff;
+	--color-surface: #F9F8F6;
+	--color-orange: #E64900;
+	--color-border: #e5e5e5;
+	--color-muted: #CECECE;
+	--color-foreground: #0a0a0a;
+	--color-foreground-secondary: #919191;
+}
+
+/* Base UI: portal stacking context */
+.root {
+	isolation: isolate;
+}
+
+/* Base UI: iOS 26+ Safari backdrop positioning */
+body {
+	position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
