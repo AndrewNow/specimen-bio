@@ -4,11 +4,15 @@ import '../styles/global.css';
 interface Props {
 	title?: string;
 	description?: string;
+	image?: string;
+	imageAlt?: string;
 }
 
 const {
 	title = 'Specimen Bio',
 	description = 'Professional biospecimen procurement services connecting supply and demand.',
+	image = 'https://i.imgur.com/v1fsgvm.png',
+	imageAlt = 'Specimen Bio',
 } = Astro.props;
 ---
 
@@ -20,6 +24,15 @@ const {
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={image} />
+		<meta property="og:image:alt" content={imageAlt} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={image} />
 		<title>{title}</title>
 	</head>
 	<body class="bg-background text-foreground min-h-dvh font-sans antialiased">
