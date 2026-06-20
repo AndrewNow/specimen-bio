@@ -5,8 +5,16 @@ import { z } from 'zod';
 export const prerender = false;
 
 const RECIPIENTS = {
-	request: { to: 'requests@specimenbio.com', subjectPrefix: 'Biospecimen Request' },
-	provider: { to: 'info@specimenbio.com', subjectPrefix: 'Provider Inquiry' },
+	request: {
+		from: 'Specimen Bio <requests@specimenbio.com>',
+		to: 'requests@specimenbio.com',
+		subjectPrefix: 'Biospecimen Request',
+	},
+	provider: {
+		from: 'Specimen Bio <info@specimenbio.com>',
+		to: 'info@specimenbio.com',
+		subjectPrefix: 'Provider Inquiry',
+	},
 } as const;
 
 const contactSchema = z.object({
@@ -55,14 +63,13 @@ export const POST: APIRoute = async ({ request }) => {
 		return json({ ok: true }, 200);
 	}
 
-	const apiKey = import.meta.env.RESEND_API_KEY;
-	const from = import.meta.env.RESEND_FROM_EMAIL;
-	if (!apiKey || !from) {
-		console.error('Missing RESEND_API_KEY or RESEND_FROM_EMAIL environment variable.');
+	const apiKey = process.env.RESEND_API_KEY;
+	if (!apiKey) {
+		console.error('Missing RESEND_API_KEY environment variable.');
 		return json({ error: 'Email service is not configured.' }, 500);
 	}
 
-	const { to, subjectPrefix } = RECIPIENTS[type];
+	const { from, to, subjectPrefix } = RECIPIENTS[type];
 	const org = organization?.trim() ? organization.trim() : 'Not provided';
 
 	const text = [

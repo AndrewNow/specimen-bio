@@ -59,7 +59,12 @@ export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) 
 
 			if (!response.ok) {
 				const body = await response.json().catch(() => null);
-				throw new Error(body?.error ?? 'Something went wrong. Please try again.');
+				throw new Error(
+					body?.error ??
+						(response.status === 404
+							? 'Contact form is unavailable. Please email us directly.'
+							: 'Something went wrong. Please try again.'),
+				);
 			}
 
 			setStatus('success');
