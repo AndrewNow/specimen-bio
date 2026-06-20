@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
 const buttonVariants = cva(
-	'inline-flex cursor-pointer items-center gap-2 rounded-full font-medium transition-all duration-150',
+	'group inline-flex cursor-pointer items-center gap-2 rounded-full font-medium transition-all duration-150',
 	{
 		variants: {
 			variant: {
@@ -43,7 +43,11 @@ export function Button({
 		<button className={cn(buttonVariants({ variant, size }), className)} type="button" {...props}>
 			{icon}
 			{children}
-			{trailingIcon}
+			{trailingIcon && (
+				<span className="inline-flex transition-transform ease-in-out duration-250 group-hover:translate-x-0.5">
+					{trailingIcon}
+				</span>
+			)}
 		</button>
 	);
 }
