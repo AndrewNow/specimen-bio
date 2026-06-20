@@ -1,21 +1,22 @@
 import { ArrowRight, Check } from 'lucide-react';
 import { Hospital01Icon, MicroscopeIcon } from 'hugeicons-react';
+import { useContactDrawer } from '../contact/useContactDrawer';
 import { BlurFade } from '../motion/BlurFade';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { SectionWrapper } from '../ui/SectionWrapper';
 
 const demandFeatures = [
-	'Biomarker discovery',
-	'Drug development & disease research',
-	'FDA and regulatory endpoints',
-	'IVD verification and validation',
+	'Access to a global Provider Network',
+	'Retrospective and prospective collections',
+	'Collaborative approach',
+	'Transparent project management',
 ];
 
 const supplyFeatures = [
-	'Provider network development',
-	'Process and compliance advisory',
-	'Audit and certification support',
+	"Access to end users' biospecimen requests",
+	'Advice and guidance if needed',
+	'Transparent project management',
 ];
 
 function FeatureList({ items }: { items: string[] }) {
@@ -37,6 +38,8 @@ function FeatureList({ items }: { items: string[] }) {
 }
 
 export function DualAudience() {
+	const { open } = useContactDrawer();
+
 	return (
 		<section className="bg-background">
 			<SectionWrapper>
@@ -52,10 +55,12 @@ export function DualAudience() {
 								strokeWidth={1}
 								aria-hidden="true"
 							/>
-							<h3 className="text-foreground text-3xl tracking-tight">For sponsors</h3>
+							<h3 className="text-foreground text-3xl tracking-tight">For biospecimen end users</h3>
 							<p className="text-foreground-secondary mt-4 text-base leading-relaxed">
-								Pharma, diagnostic, biotech, and device companies use us to source samples from
-								biomarker work through regulatory filings.
+								We work with pharma, biotech, in-vitro diagnostic, and device companies who have us
+								source human biospecimens for their R&D needs which often include biomarker
+								discovery, drug development & disease research, regulatory submissions, verification
+								and validation.
 							</p>
 							<FeatureList items={demandFeatures} />
 							<div className="mt-auto w-full pt-8">
@@ -64,6 +69,7 @@ export function DualAudience() {
 									variant="solid"
 									size="md"
 									trailingIcon={<ArrowRight size={16} aria-hidden="true" />}
+									onClick={() => open('request')}
 								>
 									Request Biospecimens
 								</Button>
@@ -82,11 +88,10 @@ export function DualAudience() {
 								strokeWidth={1}
 								aria-hidden="true"
 							/>
-							<h3 className="text-foreground text-3xl tracking-tight">For providers</h3>
+							<h3 className="text-foreground text-3xl tracking-tight">For biospecimen providers</h3>
 							<p className="text-foreground-secondary mt-4 text-base leading-relaxed">
-								We work with clinics, hospitals, pathology and diagnostic labs, biobanks, and
-								biorepositories. We connect qualified sites with end users and help them run
-								compliant collections.
+							We work with clinics, hospitals, institutes, pathology and diagnostic
+							labs, biobanks, and biorepositories, as well as CROs and others, connecting qualified Providers with End User needs.
 							</p>
 							<FeatureList items={supplyFeatures} />
 							<div className="mt-auto w-full pt-8">
@@ -95,6 +100,7 @@ export function DualAudience() {
 									variant="outline"
 									size="md"
 									trailingIcon={<ArrowRight size={16} aria-hidden="true" />}
+									onClick={() => open('provider')}
 								>
 									Join as Provider
 								</Button>

@@ -1,6 +1,13 @@
 'use client';
 
-import { animate, useInView, useMotionValue, useReducedMotion, useTransform } from 'framer-motion';
+import {
+	animate,
+	motion,
+	useInView,
+	useMotionValue,
+	useReducedMotion,
+	useTransform,
+} from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { cn } from '../../lib/utils';
 
@@ -18,33 +25,27 @@ export function AnimatedCounter({
 	duration = 1.2,
 }: AnimatedCounterProps) {
 	const ref = useRef<HTMLSpanElement>(null);
-	const isInView = useInView(ref, { once: true, margin: '-80px' });
+	const isInView = useInView(ref, { once: true, margin: '-50px' });
 	const motionValue = useMotionValue(0);
-	const rounded = useTransform(motionValue, (latest) => Math.round(latest));
+	const display = useTransform(motionValue, (latest) => `${Math.round(latest)}${suffix}`);
 	const prefersReducedMotion = useReducedMotion();
 
 	useEffect(() => {
 		if (!isInView) return;
+
 		if (prefersReducedMotion) {
 			motionValue.set(value);
 			return;
 		}
+
+		motionValue.set(0);
 		const controls = animate(motionValue, value, { duration, ease: 'easeOut' });
 		return () => controls.stop();
 	}, [isInView, motionValue, value, duration, prefersReducedMotion]);
 
-	useEffect(() => {
-		const unsubscribe = rounded.on('change', (latest) => {
-			if (ref.current) {
-				ref.current.textContent = `${latest}${suffix}`;
-			}
-		});
-		return unsubscribe;
-	}, [rounded, suffix]);
-
 	return (
-		<span ref={ref} className={cn(className)}>
-			0{suffix}
-		</span>
+		<motion.span ref={ref} className={cn(className)}>
+			{display}
+		</motion.span>
 	);
 }

@@ -25,9 +25,7 @@ export function Credibility() {
 								25+ years in the field
 							</h2>
 							<p className="text-foreground-secondary mt-6 text-base leading-relaxed md:text-lg">
-								Peter M. Nowacki founded Specimen Bio after twenty-plus years in biospecimen
-								leadership, including General Manager of the Biospecimen Procurement Business Unit
-								at Azenta Life Sciences and COO at Trans-Hit Biomarkers.
+							Peter M. Nowacki founded Specimen Bio after twenty-plus years in biospecimen leadership, including General Manager of the Biospecimen Procurement Business Unit at Azenta Life Sciences and COO at Trans-Hit Biomarkers.
 							</p>
 							<p className="text-foreground-secondary mt-4 text-base leading-relaxed md:text-lg">
 								Specimen Bio fills the gap he kept seeing: accountable ownership from first call to

@@ -50,6 +50,26 @@ body {
 	}
 }
 
+.nav-blur-backdrop-dark {
+	background: linear-gradient(to bottom, var(--color-foreground), transparent);
+}
+
+@media (min-width: 1024px) {
+	.nav-blur-backdrop-dark {
+		background: linear-gradient(
+			to bottom,
+			color-mix(in srgb, var(--color-foreground) 75%, transparent),
+			transparent
+		);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nav-blur-backdrop-dark {
+		background: linear-gradient(to bottom, var(--color-foreground), transparent);
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.nav-blur-backdrop {
 		backdrop-filter: none;

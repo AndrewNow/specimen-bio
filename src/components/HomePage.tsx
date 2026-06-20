@@ -1,3 +1,4 @@
+import { ContactDrawerProvider } from './contact/ContactDrawerProvider';
 import { Footer } from './layout/Footer';
 import { Navbar } from './layout/Navbar';
 import { Capabilities } from './sections/Capabilities';
@@ -10,7 +11,7 @@ import { WhoWeAre } from './sections/WhoWeAre';
 
 export function HomePage() {
 	return (
-		<>
+		<ContactDrawerProvider>
 			<Navbar />
 			<main>
 				<Hero />
@@ -22,6 +23,6 @@ export function HomePage() {
 				<ClosingCTA />
 			</main>
 			<Footer />
-		</>
+		</ContactDrawerProvider>
 	);
 }

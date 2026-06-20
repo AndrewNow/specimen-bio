@@ -1,18 +1,21 @@
 import { ArrowRight } from 'lucide-react';
+import { useContactDrawer } from '../contact/useContactDrawer';
 import { BlurFade } from '../motion/BlurFade';
 import { Button } from '../ui/Button';
 import { SectionWrapper } from '../ui/SectionWrapper';
 
 export function ClosingCTA() {
+	const { open } = useContactDrawer();
+
 	return (
-		<section className="bg-foreground text-background">
+		<section id="site-closing-cta" className="bg-foreground text-background">
 			<SectionWrapper className="text-center">
 				<BlurFade>
 					<h2 className="text-3xl tracking-tight md:text-4xl">Get in touch</h2>
 				</BlurFade>
 				<BlurFade delay={0.1}>
 					<p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/60">
-						Need samples for a study or want to join the provider network? Email or call.
+						Need biospecimens for your R&D or want to join our Provider Network?
 					</p>
 				</BlurFade>
 				<BlurFade delay={0.2}>
@@ -22,6 +25,7 @@ export function ClosingCTA() {
 							size="lg"
 							className="text-foreground bg-white hover:bg-white/90 hover:opacity-100"
 							trailingIcon={<ArrowRight size={18} aria-hidden="true" />}
+							onClick={() => open('request')}
 						>
 							Request Biospecimens
 						</Button>
@@ -29,6 +33,7 @@ export function ClosingCTA() {
 							variant="outline"
 							size="lg"
 							className="border-white/30 text-white hover:bg-white/10 hover:opacity-100"
+							onClick={() => open('provider')}
 						>
 							Contact Us
 						</Button>
