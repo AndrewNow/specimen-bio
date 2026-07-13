@@ -1,3 +1,4 @@
+import type { SiteContent } from '../lib/sanity/types';
 import { ContactDrawerProvider } from './contact/ContactDrawerProvider';
 import { Footer } from './layout/Footer';
 import { Navbar } from './layout/Navbar';
@@ -9,20 +10,20 @@ import { Hero } from './sections/Hero';
 import { Process } from './sections/Process';
 import { WhoWeAre } from './sections/WhoWeAre';
 
-export function HomePage() {
+export function HomePage({ content }: { content: SiteContent }) {
 	return (
-		<ContactDrawerProvider>
-			<Navbar />
+		<ContactDrawerProvider forms={content.contactForms}>
+			<Navbar settings={content.siteSettings} />
 			<main>
-				<Hero />
-				<WhoWeAre />
-				<DualAudience />
-				<Process />
-				<Capabilities />
-				<Credibility />
-				<ClosingCTA />
+				<Hero content={content.hero} />
+				<WhoWeAre content={content.about} />
+				<DualAudience content={content.audiences} />
+				<Process content={content.process} />
+				<Capabilities content={content.capabilities} />
+				<Credibility content={content.leadership} />
+				<ClosingCTA content={content.closingCta} email={content.siteSettings.contactEmail} />
 			</main>
-			<Footer />
+			<Footer settings={content.siteSettings} />
 		</ContactDrawerProvider>
 	);
 }

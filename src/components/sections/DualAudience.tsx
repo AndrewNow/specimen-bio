@@ -1,23 +1,13 @@
 import { ArrowRight, Check } from 'lucide-react';
 import { Hospital01Icon, MicroscopeIcon } from 'hugeicons-react';
+import type { ComponentType } from 'react';
+import type { AudienceCard, AudienceContent } from '../../lib/sanity/types';
+import { ctaOnClick } from '../../lib/cta';
 import { useContactDrawer } from '../contact/useContactDrawer';
 import { BlurFade } from '../motion/BlurFade';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { SectionWrapper } from '../ui/SectionWrapper';
-
-const demandFeatures = [
-	'Access to a global Provider Network',
-	'Retrospective and prospective collections',
-	'Collaborative approach',
-	'Transparent project management',
-];
-
-const supplyFeatures = [
-	"Access to end users' biospecimen requests",
-	'Advice and guidance if needed',
-	'Transparent project management',
-];
 
 function FeatureList({ items }: { items: string[] }) {
 	return (
@@ -37,7 +27,40 @@ function FeatureList({ items }: { items: string[] }) {
 	);
 }
 
-export function DualAudience() {
+interface AudienceCardProps {
+	card: AudienceCard;
+	id: string;
+	icon: ComponentType<{ size?: number; className?: string; strokeWidth?: number; 'aria-hidden'?: boolean }>;
+	buttonVariant: 'solid' | 'outline';
+	onCta: () => void;
+}
+
+function AudienceCardView({ card, id, icon: Icon, buttonVariant, onCta }: AudienceCardProps) {
+	return (
+		<Card
+			id={id}
+			className="flex h-full flex-col transition-transform duration-200 hover:-translate-y-1"
+		>
+			<Icon size={48} className="text-foreground mb-6" strokeWidth={1} aria-hidden={true} />
+			<h3 className="text-foreground text-3xl tracking-tight">{card.heading}</h3>
+			<p className="text-foreground-secondary mt-4 text-base leading-relaxed">{card.body}</p>
+			<FeatureList items={card.features} />
+			<div className="mt-auto w-full pt-8">
+				<Button
+					className="w-full justify-center"
+					variant={buttonVariant}
+					size="md"
+					trailingIcon={<ArrowRight size={16} aria-hidden="true" />}
+					onClick={onCta}
+				>
+					{card.cta.label}
+				</Button>
+			</div>
+		</Card>
+	);
+}
+
+export function DualAudience({ content }: { content: AudienceContent }) {
 	const { open } = useContactDrawer();
 
 	return (
@@ -45,67 +68,23 @@ export function DualAudience() {
 			<SectionWrapper>
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<BlurFade>
-						<Card
+						<AudienceCardView
+							card={content.demandCard}
 							id="demand"
-							className="flex h-full flex-col transition-transform duration-200 hover:-translate-y-1"
-						>
-							<MicroscopeIcon
-								size={48}
-								className="text-foreground mb-6"
-								strokeWidth={1}
-								aria-hidden="true"
-							/>
-							<h3 className="text-foreground text-3xl tracking-tight">For biospecimen end users</h3>
-							<p className="text-foreground-secondary mt-4 text-base leading-relaxed">
-								We work with pharma, biotech, in-vitro diagnostic, and device companies who have us
-								source human biospecimens for their R&D needs which often include biomarker
-								discovery, drug development & disease research, regulatory submissions, verification
-								and validation.
-							</p>
-							<FeatureList items={demandFeatures} />
-							<div className="mt-auto w-full pt-8">
-								<Button
-									className="w-full justify-center"
-									variant="solid"
-									size="md"
-									trailingIcon={<ArrowRight size={16} aria-hidden="true" />}
-									onClick={() => open('request')}
-								>
-									Request Biospecimens
-								</Button>
-							</div>
-						</Card>
+							icon={MicroscopeIcon}
+							buttonVariant="solid"
+							onCta={ctaOnClick(content.demandCard.cta, open)}
+						/>
 					</BlurFade>
 
 					<BlurFade delay={0.1}>
-						<Card
+						<AudienceCardView
+							card={content.supplyCard}
 							id="supply"
-							className="flex h-full flex-col transition-transform duration-200 hover:-translate-y-1"
-						>
-							<Hospital01Icon
-								size={48}
-								className="text-foreground mb-6"
-								strokeWidth={1}
-								aria-hidden="true"
-							/>
-							<h3 className="text-foreground text-3xl tracking-tight">For biospecimen providers</h3>
-							<p className="text-foreground-secondary mt-4 text-base leading-relaxed">
-							We work with clinics, hospitals, institutes, pathology and diagnostic
-							labs, biobanks, and biorepositories, as well as CROs and others, connecting qualified Providers with End User needs.
-							</p>
-							<FeatureList items={supplyFeatures} />
-							<div className="mt-auto w-full pt-8">
-								<Button
-									className="w-full justify-center"
-									variant="outline"
-									size="md"
-									trailingIcon={<ArrowRight size={16} aria-hidden="true" />}
-									onClick={() => open('provider')}
-								>
-									Join as Provider
-								</Button>
-							</div>
-						</Card>
+							icon={Hospital01Icon}
+							buttonVariant="outline"
+							onCta={ctaOnClick(content.supplyCard.cta, open)}
+						/>
 					</BlurFade>
 				</div>
 			</SectionWrapper>

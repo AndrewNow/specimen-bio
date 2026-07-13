@@ -1,54 +1,31 @@
+import type { ProcessContent } from '../../lib/sanity/types';
 import { BlurFade } from '../motion/BlurFade';
 import { Badge } from '../ui/Badge';
 import { SectionWrapper } from '../ui/SectionWrapper';
 import { cn } from '../../lib/utils';
 
-const steps = [
-	{
-		title: 'Orientation',
-		body: 'We take time to understand your scienctific needs, timeline, and constraints.',
-	},
-	{
-		title: 'Definition',
-		body: 'We develop and have you approve a detailed project spec, which drives the rest of the work.',
-	},
-	{
-		title: 'Feasibility',
-		body: 'We match your needs to suitable providers from our global network.',
-	},
-	{
-		title: 'Matching',
-		body: 'We propose selected Provier(s) to you, handle agreements, and all other logistics to start collection.',
-	},
-	{
-		title: 'Collection',
-		body: 'We coordinate and oversee the project from inception to collection, keeping you up-to-date of the progress.',
-	},
-	{
-		title: 'Logistics',
-		body: 'We arrange shipping with qualified couriers so samples arrive safely and on time.',
-	},
-	{
-		title: 'Acceptance',
-		body: 'You sign off when samples meet spec so we can close the project.',
-	},
-];
+export function Process({ content }: { content: ProcessContent }) {
+	const { steps } = content;
 
-export function Process() {
 	return (
 		<section id="context" className="bg-background">
 			<SectionWrapper>
 				<div className="mx-auto mb-16 max-w-2xl text-center">
-					<Badge>Our process</Badge>
+					{content.badge && <Badge>{content.badge}</Badge>}
 					<h2 className="text-foreground mt-6 text-3xl md:text-5xl tracking-tight">
-						From the first call
-						<br />
-						to samples in hand
+						{content.headingLine1}
+						{content.headingLine2 && (
+							<>
+								<br />
+								{content.headingLine2}
+							</>
+						)}
 					</h2>
-					<p className="text-foreground-secondary mt-4 text-base leading-relaxed text-balance md:text-lg">
-						Same seven steps on a single-site collection or a multi-site prospective collection
-						program.
-					</p>
+					{content.subtext && (
+						<p className="text-foreground-secondary mt-4 text-base leading-relaxed text-balance md:text-lg">
+							{content.subtext}
+						</p>
+					)}
 				</div>
 
 				<div className="relative mx-auto max-w-3xl">
@@ -69,7 +46,7 @@ export function Process() {
 									<div>
 										<h3 className="text-foreground">{step.title}</h3>
 										<p className="text-foreground-secondary mt-2 text-base leading-relaxed">
-											{step.body}
+											{step.description}
 										</p>
 									</div>
 								</BlurFade>

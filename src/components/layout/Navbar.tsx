@@ -2,25 +2,21 @@
 
 import { Menu } from '@base-ui/react/menu';
 import { ArrowRight, Menu as MenuIcon } from 'lucide-react';
+import type { SiteSettings } from '../../lib/sanity/types';
+import { ctaOnClick } from '../../lib/cta';
 import { useContactDrawer } from '../contact/useContactDrawer';
 import { Button } from '../ui/Button';
 import { cn } from '../../lib/utils';
 import { useNavOverDark } from './useNavOverDark';
 
-const navLinks = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Context', href: '#context' },
-	{ label: 'Supply', href: '#supply' },
-	{ label: 'Demand', href: '#demand' },
-	{ label: 'About Us', href: '#about' },
-];
-
 const menuItemClass =
 	'flex cursor-default py-2.5 pr-8 pl-4 text-sm text-foreground-secondary outline-hidden select-none data-highlighted:bg-surface data-highlighted:text-foreground';
 
-export function Navbar() {
+export function Navbar({ settings }: { settings: SiteSettings }) {
 	const { open } = useContactDrawer();
 	const isOverDark = useNavOverDark();
+
+	const { navLinks, navProviderCta, navRequestCta, logo, siteName } = settings;
 
 	return (
 		<header className="fixed inset-x-0 top-0 z-50">
@@ -29,13 +25,18 @@ export function Navbar() {
 				className={cn('nav-blur-backdrop', isOverDark && 'nav-blur-backdrop-dark')}
 			/>
 			<div className="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-10 lg:px-16">
-				<a href="/" className="flex shrink-0 items-center" aria-label="Specimen Bio home">
-					<img
-						src="/logo.png"
-						alt=""
-						className={cn('h-7 md:h-9 w-auto transition-[filter] duration-200', isOverDark && 'invert')}
-						decoding="async"
-					/>
+				<a href="/" className="flex shrink-0 items-center" aria-label={`${siteName} home`}>
+					{logo?.url && (
+						<img
+							src={logo.url}
+							alt={logo.alt ?? ''}
+							className={cn(
+								'h-7 md:h-9 w-auto transition-[filter] duration-200',
+								isOverDark && 'invert',
+							)}
+							decoding="async"
+						/>
+					)}
 				</a>
 
 				<nav className="hidden items-center gap-8 md:flex" aria-label="Main">
@@ -56,29 +57,31 @@ export function Navbar() {
 				</nav>
 
 				<div className="hidden items-center gap-2 md:flex">
-					<Button
-						variant="outline"
-						size="sm"
-						className={cn(
-							isOverDark &&
-								'border-white/30 text-white hover:bg-white/10 hover:opacity-100',
-						)}
-						onClick={() => open('provider')}
-					>
-						Become a Provider
-					</Button>
-					<Button
-						variant="solid"
-						size="sm"
-						className={cn(
-							isOverDark &&
-								'bg-white text-foreground hover:bg-white/90 hover:opacity-100',
-						)}
-						trailingIcon={<ArrowRight size={14} aria-hidden="true" />}
-						onClick={() => open('request')}
-					>
-						Request Biospecimens
-					</Button>
+					{navProviderCta && (
+						<Button
+							variant="outline"
+							size="sm"
+							className={cn(
+								isOverDark && 'border-white/30 text-white hover:bg-white/10 hover:opacity-100',
+							)}
+							onClick={ctaOnClick(navProviderCta, open)}
+						>
+							{navProviderCta.label}
+						</Button>
+					)}
+					{navRequestCta && (
+						<Button
+							variant="solid"
+							size="sm"
+							className={cn(
+								isOverDark && 'bg-white text-foreground hover:bg-white/90 hover:opacity-100',
+							)}
+							trailingIcon={<ArrowRight size={14} aria-hidden="true" />}
+							onClick={ctaOnClick(navRequestCta, open)}
+						>
+							{navRequestCta.label}
+						</Button>
+					)}
 				</div>
 
 				<div className="md:hidden">
@@ -86,9 +89,7 @@ export function Navbar() {
 						<Menu.Trigger
 							className={cn(
 								'inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-200',
-								isOverDark
-									? 'border-white/30 text-white'
-									: 'border-border text-foreground',
+								isOverDark ? 'border-white/30 text-white' : 'border-border text-foreground',
 							)}
 							aria-label="Open menu"
 						>
@@ -107,18 +108,22 @@ export function Navbar() {
 										</Menu.Item>
 									))}
 									<Menu.Separator className="bg-border mx-2 my-1 h-px" />
-									<Menu.Item
-										className={cn(menuItemClass, 'font-medium')}
-										onClick={() => open('provider')}
-									>
-										Become a Provider
-									</Menu.Item>
-									<Menu.Item
-										className={cn(menuItemClass, 'font-medium')}
-										onClick={() => open('request')}
-									>
-										Request Biospecimens
-									</Menu.Item>
+									{navProviderCta && (
+										<Menu.Item
+											className={cn(menuItemClass, 'font-medium')}
+											onClick={ctaOnClick(navProviderCta, open)}
+										>
+											{navProviderCta.label}
+										</Menu.Item>
+									)}
+									{navRequestCta && (
+										<Menu.Item
+											className={cn(menuItemClass, 'font-medium')}
+											onClick={ctaOnClick(navRequestCta, open)}
+										>
+											{navRequestCta.label}
+										</Menu.Item>
+									)}
 								</Menu.Popup>
 							</Menu.Positioner>
 						</Menu.Portal>

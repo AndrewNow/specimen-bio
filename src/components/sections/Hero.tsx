@@ -1,5 +1,7 @@
 import { BorderBeam } from 'border-beam';
 import { ArrowRight } from 'lucide-react';
+import type { HeroContent } from '../../lib/sanity/types';
+import { ctaOnClick } from '../../lib/cta';
 import { useContactDrawer } from '../contact/useContactDrawer';
 import { BlurFade } from '../motion/BlurFade';
 import { TextReveal } from '../motion/TextReveal';
@@ -8,7 +10,7 @@ import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { HeroBackground } from './HeroBackground';
 
-export function Hero() {
+export function Hero({ content }: { content: HeroContent }) {
 	const { open } = useContactDrawer();
 
 	return (
@@ -16,22 +18,23 @@ export function Hero() {
 			<HeroBackground />
 			<SwissGrid className="z-1" />
 			<div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-				<BlurFade>
-					<Badge className="mb-3">Professional biospecimen sourcing services</Badge>
-				</BlurFade>
+				{content.badge && (
+					<BlurFade>
+						<Badge className="mb-3">{content.badge}</Badge>
+					</BlurFade>
+				)}
 
 				<h1 className="text-foreground text-3xl md:text-6xl leading-[1.05] tracking-tight">
-					<TextReveal text="Biospecimen procurement" per="word" />
+					<TextReveal text={content.headingLine1} per="word" />
 					<br />
 					<span className="decoration-border underline underline-offset-[6px]">
-						<TextReveal text="done right." per="word" delay={0.3} />
+						<TextReveal text={content.headingLine2} per="word" delay={0.3} />
 					</span>
 				</h1>
 
 				<BlurFade delay={0.4}>
 					<p className="text-foreground-secondary mx-auto mt-6 max-w-2xl text-md leading-relaxed md:text-xl">
-						We are not a marketplace or a broker. We run procurement end to end with providers and
-						match end users' needs to qualified providers globally.
+						{content.subheading}
 					</p>
 				</BlurFade>
 
@@ -48,14 +51,20 @@ export function Hero() {
 								variant="solid"
 								size="lg"
 								trailingIcon={<ArrowRight size={18} aria-hidden="true" />}
-								onClick={() => open('request')}
+								onClick={ctaOnClick(content.primaryCta, open)}
 							>
-								Request Biospecimens
+								{content.primaryCta.label}
 							</Button>
 						</BorderBeam>
-						<Button variant="outline" size="lg" onClick={() => open('provider')}>
-							Become a Provider
-						</Button>
+						{content.secondaryCta && (
+							<Button
+								variant="outline"
+								size="lg"
+								onClick={ctaOnClick(content.secondaryCta, open)}
+							>
+								{content.secondaryCta.label}
+							</Button>
+						)}
 					</div>
 				</BlurFade>
 			</div>

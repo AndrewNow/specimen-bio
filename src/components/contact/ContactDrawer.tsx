@@ -3,20 +3,22 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Drawer } from 'vaul';
 import { Check } from 'lucide-react';
+import type { ContactFormsContent } from '../../lib/sanity/types';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Label } from '../ui/Label';
 import { Textarea } from '../ui/Textarea';
-import { contactFormConfig, type ContactFormType } from './types';
+import type { ContactFormType } from './types';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 interface ContactDrawerProps {
 	activeType: ContactFormType | null;
 	onOpenChange: (open: boolean) => void;
+	forms: ContactFormsContent;
 }
 
-export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) {
+export function ContactDrawer({ activeType, onOpenChange, forms }: ContactDrawerProps) {
 	// Retain the last type so content stays rendered during the close animation.
 	const [renderedType, setRenderedType] = useState<ContactFormType>('request');
 	const [status, setStatus] = useState<Status>('idle');
@@ -33,7 +35,9 @@ export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) 
 
 	useEffect(() => () => clearTimeout(closeTimer.current), []);
 
-	const config = contactFormConfig[renderedType];
+	const config = renderedType === 'request' ? forms.requestForm : forms.providerForm;
+	const fields = forms.fields;
+	const genericError = forms.errorFallback ?? 'Something went wrong. Please try again.';
 
 	async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -63,7 +67,7 @@ export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) 
 					body?.error ??
 						(response.status === 404
 							? 'Contact form is unavailable. Please email us directly.'
-							: 'Something went wrong. Please try again.'),
+							: genericError),
 				);
 			}
 
@@ -72,9 +76,7 @@ export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) 
 			closeTimer.current = setTimeout(() => onOpenChange(false), 2200);
 		} catch (error) {
 			setStatus('error');
-			setErrorMessage(
-				error instanceof Error ? error.message : 'Something went wrong. Please try again.',
-			);
+			setErrorMessage(error instanceof Error ? error.message : genericError);
 		}
 	}
 
@@ -97,9 +99,11 @@ export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) 
 								<div className="bg-foreground text-background flex h-12 w-12 items-center justify-center rounded-full">
 									<Check size={24} aria-hidden="true" />
 								</div>
-								<p className="text-foreground mt-4 text-base font-medium">Message sent</p>
+								<p className="text-foreground mt-4 text-base font-medium">
+									{forms.successHeading ?? 'Message sent'}
+								</p>
 								<p className="text-foreground-secondary mt-1 text-sm">
-									Thanks for reaching out. We will be in touch shortly.
+									{forms.successBody ?? 'Thanks for reaching out. We will be in touch shortly.'}
 								</p>
 							</div>
 						) : (
@@ -114,34 +118,39 @@ export function ContactDrawer({ activeType, onOpenChange }: ContactDrawerProps) 
 								/>
 
 								<div className="space-y-1.5">
-									<Label htmlFor="contact-name">Name</Label>
-									<Input id="contact-name" name="name" required placeholder="Your name" />
+									<Label htmlFor="contact-name">{fields?.name?.label ?? 'Name'}</Label>
+									<Input
+										id="contact-name"
+										name="name"
+										required
+										placeholder={fields?.name?.placeholder ?? 'Your name'}
+									/>
 								</div>
 
 								<div className="space-y-1.5">
-									<Label htmlFor="contact-email">Email</Label>
+									<Label htmlFor="contact-email">{fields?.email?.label ?? 'Email'}</Label>
 									<Input
 										id="contact-email"
 										name="email"
 										type="email"
 										required
-										placeholder="you@company.com"
+										placeholder={fields?.email?.placeholder ?? 'you@company.com'}
 									/>
 								</div>
 
 								<div className="space-y-1.5">
 									<Label htmlFor="contact-organization">
-										Organization <span className="text-foreground-secondary">(optional)</span>
+										{fields?.organization?.label ?? 'Organization (optional)'}
 									</Label>
 									<Input
 										id="contact-organization"
 										name="organization"
-										placeholder="Company or institution"
+										placeholder={fields?.organization?.placeholder ?? 'Company or institution'}
 									/>
 								</div>
 
 								<div className="space-y-1.5">
-									<Label htmlFor="contact-message">Message</Label>
+									<Label htmlFor="contact-message">{fields?.messageLabel ?? 'Message'}</Label>
 									<Textarea
 										id="contact-message"
 										name="message"
