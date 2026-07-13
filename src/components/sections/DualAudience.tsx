@@ -39,7 +39,7 @@ function AudienceCardView({ card, id, icon: Icon, buttonVariant, onCta }: Audien
 	return (
 		<Card
 			id={id}
-			className="flex h-full flex-col transition-transform duration-200 hover:-translate-y-1"
+			className="flex h-full flex-col scroll-mt-24 transition-transform duration-200 hover:-translate-y-1"
 		>
 			<Icon size={48} className="text-foreground mb-6" strokeWidth={1} aria-hidden={true} />
 			<h3 className="text-foreground text-3xl tracking-tight">{card.heading}</h3>
