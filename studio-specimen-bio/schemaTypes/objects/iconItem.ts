@@ -26,6 +26,7 @@ export const iconItem = defineType({
           {title: 'Globe', value: 'globe'},
           {title: 'Test tube', value: 'testTube'},
           {title: 'Activity / pulse', value: 'activity'},
+          {title: 'Thumbs up', value: 'thumbsUp'},
         ],
       },
       validation: (rule) => rule.required(),

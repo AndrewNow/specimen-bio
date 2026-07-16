@@ -1,12 +1,14 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
+import {StudioLogo} from './components/StudioLogo'
 import {schemaTypes, singletonTypes} from './schemaTypes'
 import {structure} from './structure'
 
 export default defineConfig({
   name: 'default',
   title: 'Specimen Bio',
+  icon: StudioLogo,
 
   projectId: 'gos2rlzf',
   dataset: 'production',

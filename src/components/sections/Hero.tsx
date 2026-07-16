@@ -8,13 +8,14 @@ import { TextReveal } from '../motion/TextReveal';
 import { SwissGrid } from '../SwissGrid';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
+import { RichText } from '../ui/RichText';
 import { HeroBackground } from './HeroBackground';
 
 export function Hero({ content }: { content: HeroContent }) {
 	const { open } = useContactDrawer();
 
 	return (
-		<section className="bg-background relative mt-[2.5vh] flex min-h-[75vh] md:min-h-[85vh] items-center justify-center overflow-hidden pt-16 pb-[7vh] md:pb-[10vh]">
+		<section className="bg-background relative flex min-h-[75vh] md:min-h-[85vh] items-center justify-center overflow-hidden pt-16 pb-[7vh] md:pb-[10vh]">
 			<HeroBackground />
 			<SwissGrid className="z-1" />
 			<div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
@@ -33,9 +34,11 @@ export function Hero({ content }: { content: HeroContent }) {
 				</h1>
 
 				<BlurFade delay={0.4}>
-					<p className="text-foreground-secondary mx-auto mt-6 max-w-2xl text-md leading-relaxed md:text-xl">
-						{content.subheading}
-					</p>
+					<RichText
+						value={content.subheading}
+						className="mx-auto mt-6 max-w-2xl"
+						paragraphClassName="text-foreground-secondary text-md leading-relaxed md:text-xl"
+					/>
 				</BlurFade>
 
 				<BlurFade delay={0.6}>

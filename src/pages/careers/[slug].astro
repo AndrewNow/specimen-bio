@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { JobListingPage } from '../../components/JobListingPage';
+import { getJobListing, getSiteChrome } from '../../lib/sanity/queries';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect('/careers');
+}
+
+const [job, chrome] = await Promise.all([getJobListing(slug), getSiteChrome()]);
+
+if (!job || !chrome?.siteSettings || !chrome?.contactForms) {
+	return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const seo = job.seo;
+const title = seo?.metaTitle ?? `${job.title} | ${chrome.siteSettings.siteName}`;
+const description = seo?.metaDescription ?? job.summary;
+---
+
+<Layout
+	title={title}
+	description={description}
+	image={seo?.ogImage?.url ?? chrome.siteSettings.seo?.ogImage?.url ?? undefined}
+	imageAlt={seo?.ogImage?.alt ?? chrome.siteSettings.seo?.ogImage?.alt ?? undefined}
+>
+	<JobListingPage client:load chrome={chrome} job={job} />
+</Layout>

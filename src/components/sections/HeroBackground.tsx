@@ -9,7 +9,7 @@ export function HeroBackground() {
 				className="h-full w-full"
 				width="100%"
 				height="100%"
-				colors={["#a3a3a34f", "#ffffff0a", "#d1d2d04a", "#a56a5563"]}
+				colors={['#a3a3a34f', '#ffffff0a', '#d1d2d04a', '#a56a5563']}
 				colorBack="#ffffff"
 				softness={0.56}
 				intensity={1}

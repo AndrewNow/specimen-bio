@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { CookieConsent } from '../components/CookieConsent';
+import { GA_MEASUREMENT_ID } from '../lib/analytics';
 
 interface Props {
 	title?: string;
@@ -34,10 +36,37 @@ const {
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={image} />
 		<title>{title}</title>
+		<script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			window.gtag = gtag;
+
+			gtag('consent', 'default', {
+				analytics_storage: 'denied',
+				ad_storage: 'denied',
+				ad_user_data: 'denied',
+				ad_personalization: 'denied',
+				wait_for_update: 500,
+			});
+
+			try {
+				var stored = localStorage.getItem('specimenbio-cookie-consent');
+				if (stored === 'granted' || stored === 'denied') {
+					gtag('consent', 'update', { analytics_storage: stored });
+				}
+			} catch (_) {}
+
+			gtag('js', new Date());
+			gtag('config', GA_MEASUREMENT_ID);
+		</script>
+		<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
 	</head>
 	<body class="bg-background text-foreground min-h-dvh font-sans antialiased">
 		<div class="root">
 			<slot />
 		</div>
+		<CookieConsent client:load />
 	</body>
 </html>

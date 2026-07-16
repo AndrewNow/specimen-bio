@@ -47,7 +47,7 @@ export interface HeroContent {
 	badge: string | null;
 	headingLine1: string;
 	headingLine2: string;
-	subheading: string;
+	subheading: unknown[];
 	primaryCta: CtaContent;
 	secondaryCta: CtaContent | null;
 }
@@ -56,13 +56,13 @@ export interface AboutContent {
 	eyebrow: string | null;
 	headingLine1: string;
 	headingLine2: string | null;
-	paragraphs: string[];
+	body: unknown[];
 	callouts: IconItemContent[];
 }
 
 export interface AudienceCard {
 	heading: string;
-	body: string;
+	body: unknown[];
 	features: string[];
 	cta: CtaContent;
 }
@@ -108,6 +108,7 @@ export interface TeamMember {
 	name: string;
 	role: string;
 	photo: ImageContent | null;
+	pullquote: string | null;
 	attributes: IconItemContent[];
 	linkedinLabel: string | null;
 	linkedinUrl: string | null;
@@ -116,9 +117,9 @@ export interface TeamMember {
 export interface LeadershipContent {
 	badge: string | null;
 	heading: string;
-	paragraphs: string[];
+	body: unknown[];
 	ctaLabel: string | null;
-	teamMember: TeamMember | null;
+	teamMembers: TeamMember[];
 }
 
 export interface ClosingCtaContent {
@@ -153,6 +154,46 @@ export interface ContactFormsContent {
 	successHeading: string | null;
 	successBody: string | null;
 	errorFallback: string | null;
+}
+
+export interface LegalPageContent {
+	title: string;
+	slug: string;
+	lastUpdated: string | null;
+	intro: string | null;
+	body: unknown[];
+	seo: SeoContent | null;
+}
+
+export type EmploymentType = 'full-time' | 'part-time' | 'contract' | 'internship';
+
+export interface JobListingSummary {
+	title: string;
+	slug: string;
+	department: string | null;
+	location: string | null;
+	employmentType: EmploymentType | null;
+	postedAt: string | null;
+	summary: string;
+}
+
+export interface JobListingContent extends JobListingSummary {
+	body: unknown[];
+	applyUrl: string | null;
+	applyEmail: string | null;
+	seo: SeoContent | null;
+}
+
+export interface CareersPageContent {
+	title: string;
+	intro: string | null;
+	emptyState: string | null;
+	seo: SeoContent | null;
+}
+
+export interface SiteChromeContent {
+	siteSettings: SiteSettings;
+	contactForms: ContactFormsContent;
 }
 
 export interface SiteContent {

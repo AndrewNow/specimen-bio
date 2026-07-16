@@ -23,10 +23,10 @@ export const aboutSection = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'paragraphs',
-      title: 'Body paragraphs',
-      type: 'array',
-      of: [{type: 'text', rows: 4}],
+      name: 'body',
+      title: 'Body',
+      description: 'Paragraph text with optional bold, italic, and links.',
+      type: 'simpleBlockContent',
       validation: (rule) => rule.required().min(1),
     }),
     defineField({

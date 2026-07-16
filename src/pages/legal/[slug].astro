@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { LegalPage } from '../../components/LegalPage';
+import { getLegalPage, getSiteChrome } from '../../lib/sanity/queries';
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+if (!slug) {
+	return Astro.redirect('/');
+}
+
+const [page, chrome] = await Promise.all([getLegalPage(slug), getSiteChrome()]);
+
+if (!page || !chrome?.siteSettings || !chrome?.contactForms) {
+	return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const seo = page.seo;
+const title = seo?.metaTitle ?? `${page.title} | ${chrome.siteSettings.siteName}`;
+const description =
+	seo?.metaDescription ?? page.intro ?? `${page.title} for ${chrome.siteSettings.siteName}.`;
+---
+
+<Layout
+	title={title}
+	description={description}
+	image={seo?.ogImage?.url ?? chrome.siteSettings.seo?.ogImage?.url ?? undefined}
+	imageAlt={seo?.ogImage?.alt ?? chrome.siteSettings.seo?.ogImage?.alt ?? undefined}
+>
+	<LegalPage client:load chrome={chrome} page={page} />
+</Layout>

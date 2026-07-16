@@ -9,10 +9,10 @@ const audienceCardFields = [
   }),
   defineField({
     name: 'body',
-    title: 'Body paragraph',
-    type: 'text',
-    rows: 4,
-    validation: (rule) => rule.required(),
+    title: 'Body',
+    description: 'Paragraph text with optional bold, italic, and links.',
+    type: 'simpleBlockContent',
+    validation: (rule) => rule.required().min(1),
   }),
   defineField({
     name: 'features',

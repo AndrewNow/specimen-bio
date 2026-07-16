@@ -7,6 +7,7 @@
 	},
 	"scripts": {
 		"dev": "astro dev",
+		"dev:sanity": "yarn --cwd studio-specimen-bio dev",
 		"build": "astro build",
 		"preview": "astro preview",
 		"astro": "astro",
@@ -18,6 +19,7 @@
 		"@astrojs/vercel": "^10.0.8",
 		"@base-ui/react": "^1.5.0",
 		"@paper-design/shaders-react": "^0.0.76",
+		"@portabletext/react": "^6.2.0",
 		"@sanity/astro": "^3.4.2",
 		"@sanity/client": "^7.23.1",
 		"@sanity/vision": "^6.4.0",

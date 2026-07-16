@@ -25,10 +25,10 @@ export const heroSection = defineType({
     }),
     defineField({
       name: 'subheading',
-      title: 'Subheading paragraph',
-      type: 'text',
-      rows: 3,
-      validation: (rule) => rule.required(),
+      title: 'Subheading',
+      description: 'One style of text with optional bold, italic, and links.',
+      type: 'simpleBlockContent',
+      validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: 'primaryCta',

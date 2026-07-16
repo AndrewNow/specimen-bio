@@ -1,5 +1,6 @@
 import type { CapabilitiesContent } from '../../lib/sanity/types';
 import { getIcon } from '../../lib/icons';
+import { cn } from '../../lib/utils';
 import { AnimatedCounter } from '../motion/AnimatedCounter';
 import { BlurFade } from '../motion/BlurFade';
 import { SwissGrid } from '../SwissGrid';
@@ -14,7 +15,23 @@ function parseStatValue(value: string): { count: number; suffix: string } {
 	return { count: Number(match[1]), suffix: match[2] };
 }
 
+/** Trailing catch-all phrases like "and more…" / "etc." stay at the end after alphabetical sort. */
+function isTrailingItem(item: string): boolean {
+	const normalized = item.trim().replace(/[.…]+$/u, '');
+	return /^(and more|etc)$/i.test(normalized);
+}
+
+function sortCardItems(items: string[]): string[] {
+	const trailing = items.filter(isTrailingItem);
+	const rest = items
+		.filter((item) => !isTrailingItem(item))
+		.sort((a, b) => a.localeCompare(b));
+	return [...rest, ...trailing];
+}
+
 export function Capabilities({ content }: { content: CapabilitiesContent }) {
+	const isFourUp = content.cards.length === 4;
+
 	return (
 		<section className="border-border bg-surface relative overflow-hidden border-y">
 			<SwissGrid />
@@ -31,34 +48,36 @@ export function Capabilities({ content }: { content: CapabilitiesContent }) {
 					)}
 				</div>
 
-				<div className="border-border mt-12 grid grid-cols-3 gap-4 border-t pt-12 md:gap-8">
-					{content.stats.map((stat, i) => {
-						const { count, suffix } = parseStatValue(stat.value);
-						return (
-							<BlurFade key={stat.label} delay={0.1 * i}>
-								<div>
-									<AnimatedCounter
-										value={count}
-										suffix={suffix}
-										className="text-foreground text-4xl tracking-tight md:text-6xl"
-									/>
-									<p className="text-secondary mt-1 text-xs md:text-sm">{stat.label}</p>
-								</div>
-							</BlurFade>
-						);
-					})}
-				</div>
-
-				<div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3 md:items-stretch">
+				<div
+					className={cn(
+						'mt-12 grid grid-cols-1 gap-4 md:items-stretch',
+						isFourUp ? 'md:grid-cols-2' : 'md:grid-cols-3',
+					)}
+				>
 					{content.cards.map((card, i) => {
 						const Icon = getIcon(card.icon);
+						const stat =
+							content.stats.find(
+								(s) => s.label.toLowerCase() === card.title.toLowerCase(),
+							) ?? content.stats[i];
+						const parsed = stat ? parseStatValue(stat.value) : null;
+
 						return (
 							<BlurFade key={card.title} delay={0.1 * i} className="h-full">
 								<Card variant="outline" className="h-full">
-									<Icon size={20} className="text-foreground mb-4" aria-hidden="true" />
-									<h3 className="text-foreground">{card.title}</h3>
+									<Icon size={24} className="text-foreground mb-4" aria-hidden="true" />
+									{parsed && (
+										<AnimatedCounter
+											value={parsed.count}
+											suffix={parsed.suffix}
+											className="text-foreground text-4xl tracking-tight md:text-5xl"
+										/>
+									)}
+									<h3 className={cn('text-foreground', parsed ? 'mt-1' : undefined)}>
+										{card.title}
+									</h3>
 									<p className="text-foreground-secondary mt-3 text-sm leading-relaxed">
-										{card.items.join(' · ')}
+										{sortCardItems(card.items).join(' · ')}
 									</p>
 								</Card>
 							</BlurFade>

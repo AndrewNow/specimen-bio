@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { CareersPage } from '../../components/CareersPage';
+import { getCareersPage, getJobListings, getSiteChrome } from '../../lib/sanity/queries';
+
+export const prerender = false;
+
+const [page, jobs, chrome] = await Promise.all([
+	getCareersPage(),
+	getJobListings(),
+	getSiteChrome(),
+]);
+
+if (!chrome?.siteSettings || !chrome?.contactForms) {
+	return new Response(null, { status: 404, statusText: 'Not Found' });
+}
+
+const careersPage = page ?? {
+	title: 'Careers',
+	intro: 'Join Specimen Bio and help connect high-quality biospecimens with the teams that need them.',
+	emptyState:
+		'We do not have any open roles right now. Check back soon, or reach out if you think you would be a fit.',
+	seo: null,
+};
+
+const seo = careersPage.seo;
+const title = seo?.metaTitle ?? `${careersPage.title} | ${chrome.siteSettings.siteName}`;
+const description =
+	seo?.metaDescription ??
+	careersPage.intro ??
+	`Open roles at ${chrome.siteSettings.siteName}.`;
+---
+
+<Layout
+	title={title}
+	description={description}
+	image={seo?.ogImage?.url ?? chrome.siteSettings.seo?.ogImage?.url ?? undefined}
+	imageAlt={seo?.ogImage?.alt ?? chrome.siteSettings.seo?.ogImage?.alt ?? undefined}
+>
+	<CareersPage client:load chrome={chrome} page={careersPage} jobs={jobs ?? []} />
+</Layout>

@@ -7,6 +7,7 @@ import { useContactDrawer } from '../contact/useContactDrawer';
 import { BlurFade } from '../motion/BlurFade';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
+import { RichText } from '../ui/RichText';
 import { SectionWrapper } from '../ui/SectionWrapper';
 
 function FeatureList({ items }: { items: string[] }) {
@@ -43,7 +44,11 @@ function AudienceCardView({ card, id, icon: Icon, buttonVariant, onCta }: Audien
 		>
 			<Icon size={48} className="text-foreground mb-6" strokeWidth={1} aria-hidden={true} />
 			<h3 className="text-foreground text-3xl tracking-tight">{card.heading}</h3>
-			<p className="text-foreground-secondary mt-4 text-base leading-relaxed">{card.body}</p>
+			<RichText
+				value={card.body}
+				className="mt-4"
+				paragraphClassName="text-foreground-secondary text-base leading-relaxed"
+			/>
 			<FeatureList items={card.features} />
 			<div className="mt-auto w-full pt-8">
 				<Button

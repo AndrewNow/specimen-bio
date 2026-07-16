@@ -3,6 +3,8 @@ import {cta} from './objects/cta'
 import {navLink} from './objects/navLink'
 import {iconItem} from './objects/iconItem'
 import {seo} from './objects/seo'
+import {blockContent} from './objects/blockContent'
+import {simpleBlockContent} from './objects/simpleBlockContent'
 
 // Section documents (singletons)
 import {siteSettings} from './documents/siteSettings'
@@ -14,6 +16,9 @@ import {capabilitiesSection} from './documents/capabilitiesSection'
 import {leadershipSection} from './documents/leadershipSection'
 import {closingCtaSection} from './documents/closingCtaSection'
 import {contactForms} from './documents/contactForms'
+import {legalPage} from './documents/legalPage'
+import {careersPage} from './documents/careersPage'
+import {jobListing} from './documents/jobListing'
 
 export const schemaTypes = [
   // objects
@@ -21,6 +26,8 @@ export const schemaTypes = [
   navLink,
   iconItem,
   seo,
+  blockContent,
+  simpleBlockContent,
   // documents
   siteSettings,
   heroSection,
@@ -31,6 +38,9 @@ export const schemaTypes = [
   leadershipSection,
   closingCtaSection,
   contactForms,
+  legalPage,
+  careersPage,
+  jobListing,
 ]
 
 /**
@@ -47,4 +57,5 @@ export const singletonTypes = new Set([
   'leadershipSection',
   'closingCtaSection',
   'contactForms',
+  'careersPage',
 ])

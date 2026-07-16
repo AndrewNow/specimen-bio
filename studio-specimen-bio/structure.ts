@@ -25,4 +25,9 @@ export const structure: StructureResolver = (S) =>
       singletonItem(S, 'closingCtaSection', 'Closing call to action'),
       S.divider().title('Other'),
       singletonItem(S, 'contactForms', 'Contact forms'),
+      S.divider().title('Careers'),
+      singletonItem(S, 'careersPage', 'Careers page'),
+      S.documentTypeListItem('jobListing').title('Job listings'),
+      S.divider().title('Legal'),
+      S.documentTypeListItem('legalPage').title('Legal pages'),
     ])

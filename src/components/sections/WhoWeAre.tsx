@@ -1,7 +1,8 @@
 import type { AboutContent } from '../../lib/sanity/types';
 import { getIcon } from '../../lib/icons';
+import { cn } from '../../lib/utils';
 import { BlurFade } from '../motion/BlurFade';
-import { TextReveal } from '../motion/TextReveal';
+import { RichText } from '../ui/RichText';
 import { SectionWrapper } from '../ui/SectionWrapper';
 
 export function WhoWeAre({ content }: { content: AboutContent }) {
@@ -26,12 +27,13 @@ export function WhoWeAre({ content }: { content: AboutContent }) {
 						</div>
 					</BlurFade>
 
-					<div>
-						<TextReveal
-							per="line"
-							text={content.paragraphs.join('\n\n')}
-							className="text-foreground-secondary text-base leading-relaxed md:text-lg"
-						/>
+					<div className={cn(content.eyebrow && 'md:mt-8')}>
+						<BlurFade>
+							<RichText
+								value={content.body}
+								paragraphClassName="text-foreground-secondary text-base leading-relaxed md:text-lg"
+							/>
+						</BlurFade>
 
 						{content.callouts.length > 0 && (
 							<div className="border-border mt-8 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2">
@@ -42,7 +44,7 @@ export function WhoWeAre({ content }: { content: AboutContent }) {
 											<div className="flex items-center gap-2">
 												<Icon
 													size={14}
-													className="text-secondary shrink-0"
+													className="text-orange/50 shrink-0"
 													aria-hidden="true"
 													strokeWidth={2}
 												/>

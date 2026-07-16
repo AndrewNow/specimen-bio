@@ -33,7 +33,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
 									className="text-white/50 transition-colors hover:text-white"
 									aria-label="LinkedIn"
 								>
-									<Linkedin01Icon size={18} strokeWidth={1.5} />
+									<Linkedin01Icon size={24} strokeWidth={1.5} />
 								</a>
 							</div>
 						)}

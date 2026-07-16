@@ -10,6 +10,7 @@ import {
 	Microscope,
 	Route,
 	TestTube2,
+	ThumbsUp,
 	type LucideProps,
 } from 'lucide-react';
 
@@ -31,6 +32,7 @@ const iconRegistry: Record<string, IconComponent> = {
 	globe: Globe,
 	testTube: TestTube2,
 	activity: Activity,
+	thumbsUp: ThumbsUp,
 };
 
 export function getIcon(name: string | null | undefined): IconComponent {

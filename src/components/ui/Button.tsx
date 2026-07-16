@@ -3,7 +3,7 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/utils';
 
 const buttonVariants = cva(
-	'group inline-flex cursor-pointer items-center gap-2 rounded-full font-medium transition-all duration-150',
+	'group inline-flex cursor-pointer items-center justify-center gap-2 rounded-full font-medium transition-all duration-150',
 	{
 		variants: {
 			variant: {
