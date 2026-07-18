@@ -23,9 +23,7 @@ function isTrailingItem(item: string): boolean {
 
 function sortCardItems(items: string[]): string[] {
 	const trailing = items.filter(isTrailingItem);
-	const rest = items
-		.filter((item) => !isTrailingItem(item))
-		.sort((a, b) => a.localeCompare(b));
+	const rest = items.filter((item) => !isTrailingItem(item)).sort((a, b) => a.localeCompare(b));
 	return [...rest, ...trailing];
 }
 
@@ -57,9 +55,8 @@ export function Capabilities({ content }: { content: CapabilitiesContent }) {
 					{content.cards.map((card, i) => {
 						const Icon = getIcon(card.icon);
 						const stat =
-							content.stats.find(
-								(s) => s.label.toLowerCase() === card.title.toLowerCase(),
-							) ?? content.stats[i];
+							content.stats.find((s) => s.label.toLowerCase() === card.title.toLowerCase()) ??
+							content.stats[i];
 						const parsed = stat ? parseStatValue(stat.value) : null;
 
 						return (

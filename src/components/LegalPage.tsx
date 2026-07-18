@@ -2,6 +2,7 @@ import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { LegalPageContent, SiteChromeContent } from '../lib/sanity/types';
 import { openCookieConsent } from '../lib/analytics';
 import { ContactDrawerProvider } from './contact/ContactDrawerProvider';
+import { FixedRevealEnd } from './layout/FixedRevealEnd';
 import { Footer } from './layout/Footer';
 import { Navbar } from './layout/Navbar';
 import { Button } from './ui/Button';
@@ -69,13 +70,7 @@ export function LegalPage({
 		<ContactDrawerProvider forms={chrome.contactForms}>
 			<Navbar settings={chrome.siteSettings} />
 			<main className="bg-background min-h-dvh pt-24 pb-20 md:pt-28 md:pb-28">
-				<article
-					className={
-						isCookieSettings
-							? 'mx-auto max-w-2xl px-6 text-left md:px-10'
-							: 'mx-auto max-w-2xl px-6 text-center md:px-10'
-					}
-				>
+				<article className="mx-auto max-w-2xl px-6 text-left md:px-10">
 					<p className="text-secondary text-xs tracking-wide uppercase">Legal</p>
 					<h1 className="text-foreground mt-4 text-3xl tracking-tight md:text-5xl">
 						{page.title}
@@ -86,13 +81,7 @@ export function LegalPage({
 						</p>
 					)}
 					{page.intro && (
-						<p
-							className={
-								isCookieSettings
-									? 'text-foreground-secondary mt-8 max-w-xl text-base leading-relaxed md:text-lg'
-									: 'text-foreground-secondary mx-auto mt-8 max-w-xl text-base leading-relaxed md:text-lg'
-							}
-						>
+						<p className="text-foreground-secondary mt-8 max-w-xl text-base leading-relaxed md:text-lg">
 							{page.intro}
 						</p>
 					)}
@@ -108,7 +97,9 @@ export function LegalPage({
 					)}
 				</article>
 			</main>
-			<Footer settings={chrome.siteSettings} />
+			<FixedRevealEnd>
+				<Footer settings={chrome.siteSettings} />
+			</FixedRevealEnd>
 		</ContactDrawerProvider>
 	);
 }

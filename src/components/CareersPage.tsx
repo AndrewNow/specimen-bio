@@ -1,6 +1,7 @@
 import type { CareersPageContent, JobListingSummary, SiteChromeContent } from '../lib/sanity/types';
 import { formatJobDate, jobMetaParts } from '../lib/careers';
 import { ContactDrawerProvider } from './contact/ContactDrawerProvider';
+import { FixedRevealEnd } from './layout/FixedRevealEnd';
 import { Footer } from './layout/Footer';
 import { Navbar } from './layout/Navbar';
 
@@ -73,7 +74,9 @@ export function CareersPage({
 					</div>
 				</section>
 			</main>
-			<Footer settings={chrome.siteSettings} />
+			<FixedRevealEnd>
+				<Footer settings={chrome.siteSettings} />
+			</FixedRevealEnd>
 		</ContactDrawerProvider>
 	);
 }

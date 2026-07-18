@@ -15,7 +15,7 @@ export function Hero({ content }: { content: HeroContent }) {
 	const { open } = useContactDrawer();
 
 	return (
-		<section className="bg-background relative flex min-h-[75vh] md:min-h-[85vh] items-center justify-center overflow-hidden pt-16 pb-[7vh] md:pb-[10vh]">
+		<section className="bg-background relative flex min-h-[75vh] items-center justify-center overflow-hidden pt-16 pb-[7vh] md:min-h-[85vh] md:pb-[10vh]">
 			<HeroBackground />
 			<SwissGrid className="z-1" />
 			<div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
@@ -25,7 +25,7 @@ export function Hero({ content }: { content: HeroContent }) {
 					</BlurFade>
 				)}
 
-				<h1 className="text-foreground text-3xl md:text-6xl leading-[1.05] tracking-tight">
+				<h1 className="text-foreground text-3xl leading-[1.05] tracking-tight md:text-6xl">
 					<TextReveal text={content.headingLine1} per="word" />
 					<br />
 					<span className="decoration-border underline underline-offset-[6px]">
@@ -60,11 +60,7 @@ export function Hero({ content }: { content: HeroContent }) {
 							</Button>
 						</BorderBeam>
 						{content.secondaryCta && (
-							<Button
-								variant="outline"
-								size="lg"
-								onClick={ctaOnClick(content.secondaryCta, open)}
-							>
+							<Button variant="outline" size="lg" onClick={ctaOnClick(content.secondaryCta, open)}>
 								{content.secondaryCta.label}
 							</Button>
 						)}

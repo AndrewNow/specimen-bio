@@ -8,7 +8,7 @@ export function Process({ content }: { content: ProcessContent }) {
 	const { steps } = content;
 
 	return (
-		<section id="context" className="bg-background">
+		<section id="context">
 			<SectionWrapper>
 				<div className="mx-auto mb-16 max-w-2xl text-center">
 					{content.badge && <Badge>{content.badge}</Badge>}

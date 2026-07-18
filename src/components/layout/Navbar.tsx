@@ -39,7 +39,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
 					)}
 				</a>
 
-				<nav className="hidden items-center gap-8 md:flex" aria-label="Main">
+				<nav className="hidden items-center gap-8 xl:flex" aria-label="Main">
 					{navLinks.map((link) => (
 						<a
 							key={link.label}
@@ -56,7 +56,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
 					))}
 				</nav>
 
-				<div className="hidden items-center gap-2 md:flex">
+				<div className="hidden items-center gap-2 xl:flex">
 					{navProviderCta && (
 						<Button
 							variant="outline"
@@ -84,7 +84,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
 					)}
 				</div>
 
-				<div className="md:hidden">
+				<div className="xl:hidden">
 					<Menu.Root>
 						<Menu.Trigger
 							className={cn(

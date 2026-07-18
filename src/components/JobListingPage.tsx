@@ -2,6 +2,7 @@ import { PortableText, type PortableTextComponents } from '@portabletext/react';
 import type { JobListingContent, SiteChromeContent } from '../lib/sanity/types';
 import { formatJobDate, jobMetaParts } from '../lib/careers';
 import { ContactDrawerProvider } from './contact/ContactDrawerProvider';
+import { FixedRevealEnd } from './layout/FixedRevealEnd';
 import { Footer } from './layout/Footer';
 import { Navbar } from './layout/Navbar';
 
@@ -149,7 +150,9 @@ export function JobListingPage({
 					)}
 				</article>
 			</main>
-			<Footer settings={chrome.siteSettings} />
+			<FixedRevealEnd>
+				<Footer settings={chrome.siteSettings} />
+			</FixedRevealEnd>
 		</ContactDrawerProvider>
 	);
 }

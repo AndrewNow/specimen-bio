@@ -47,20 +47,9 @@ html {
 	isolation: isolate;
 }
 
-/* Fixed footer reveal (xl+): body clears the footer, content stacks above it */
+/* Base UI: iOS 26+ Safari backdrop positioning */
 body {
 	position: relative;
-}
-
-@media (min-width: 1280px) {
-	body {
-		padding-bottom: var(--footer-height, 0px);
-	}
-
-	main {
-		position: relative;
-		z-index: 1;
-	}
 }
 
 /* Progressive blur for fixed nav (mask + backdrop-filter) */

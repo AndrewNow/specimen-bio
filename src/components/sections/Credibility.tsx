@@ -44,9 +44,9 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 									return (
 										<li
 											key={attribute.text}
-											className="text-foreground-secondary border-border flex items-center gap-3 border-b py-3 text-sm last:border-0"
+											className="text-foreground-secondary border-border flex items-start gap-3 border-b py-3 text-sm last:border-0"
 										>
-											<Icon size={14} className="text-secondary shrink-0" aria-hidden="true" />
+											<Icon size={14} className="text-secondary mt-0.5 shrink-0" aria-hidden="true" />
 											{attribute.text}
 										</li>
 									);
