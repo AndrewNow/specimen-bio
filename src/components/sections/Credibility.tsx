@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { Linkedin01Icon } from 'hugeicons-react';
+import { sanityImageUrl } from '../../lib/sanity/image';
 import type { LeadershipContent, TeamMember } from '../../lib/sanity/types';
 import { getIcon } from '../../lib/icons';
 import { cn } from '../../lib/utils';
@@ -17,11 +18,13 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 			<div className="flex items-center gap-4">
 				{member.photo?.url && (
 					<img
-						src={member.photo.url}
+						src={sanityImageUrl(member.photo.url, { width: 144, height: 144 })}
 						alt={member.photo.alt ?? member.name}
 						className="size-18 rounded-full object-cover object-center"
-						width={56}
-						height={56}
+						width={72}
+						height={72}
+						loading="lazy"
+						decoding="async"
 					/>
 				)}
 				<div className="flex flex-col">
@@ -30,7 +33,7 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 				</div>
 			</div>
 			{member.pullquote && (
-				<blockquote className="text-foreground border-orange/40 mt-6 py-2 border-l-2 pl-4 text-base my-3 leading-relaxed text-pretty">
+				<blockquote className="text-foreground border-orange/40 my-3 mt-6 border-l-2 py-2 pl-4 text-base leading-relaxed text-pretty">
 					"{member.pullquote}"
 				</blockquote>
 			)}
@@ -46,7 +49,11 @@ function TeamMemberCard({ member }: { member: TeamMember }) {
 											key={attribute.text}
 											className="text-foreground-secondary border-border flex items-start gap-3 border-b py-3 text-sm last:border-0"
 										>
-											<Icon size={14} className="text-secondary mt-0.5 shrink-0" aria-hidden="true" />
+											<Icon
+												size={14}
+												className="text-secondary mt-0.5 shrink-0"
+												aria-hidden="true"
+											/>
 											{attribute.text}
 										</li>
 									);
@@ -119,11 +126,7 @@ export function Credibility({ content }: { content: LeadershipContent }) {
 					</BlurFade>
 
 					{members.length > 0 && (
-						<div
-							className={cn(
-								isStacked && 'grid grid-cols-1 items-stretch gap-4 md:grid-cols-2',
-							)}
-						>
+						<div className={cn(isStacked && 'grid grid-cols-1 items-stretch gap-4 md:grid-cols-2')}>
 							{members.map((member, i) => (
 								<BlurFade key={member.name} delay={0.1 * (i + 1)} className="h-full">
 									<TeamMemberCard member={member} />

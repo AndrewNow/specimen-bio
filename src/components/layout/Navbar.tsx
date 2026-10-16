@@ -2,6 +2,7 @@
 
 import { Menu } from '@base-ui/react/menu';
 import { ArrowRight, Menu as MenuIcon } from 'lucide-react';
+import { sanityImageUrl } from '../../lib/sanity/image';
 import type { SiteSettings } from '../../lib/sanity/types';
 import { ctaOnClick } from '../../lib/cta';
 import { useContactDrawer } from '../contact/useContactDrawer';
@@ -28,10 +29,10 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
 				<a href="/" className="flex shrink-0 items-center" aria-label={`${siteName} home`}>
 					{logo?.url && (
 						<img
-							src={logo.url}
+							src={sanityImageUrl(logo.url, { width: 480 })}
 							alt={logo.alt ?? ''}
 							className={cn(
-								'h-7 md:h-9 w-auto transition-[filter] duration-200',
+								'h-7 w-auto transition-[filter] duration-200 md:h-9',
 								isOverDark && 'invert',
 							)}
 							decoding="async"
@@ -74,7 +75,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
 							variant="solid"
 							size="sm"
 							className={cn(
-								isOverDark && 'bg-white text-foreground hover:bg-white/90 hover:opacity-100',
+								isOverDark && 'text-foreground bg-white hover:bg-white/90 hover:opacity-100',
 							)}
 							trailingIcon={<ArrowRight size={14} aria-hidden="true" />}
 							onClick={ctaOnClick(navRequestCta, open)}
@@ -97,7 +98,7 @@ export function Navbar({ settings }: { settings: SiteSettings }) {
 						</Menu.Trigger>
 						<Menu.Portal>
 							<Menu.Positioner sideOffset={8} align="end">
-								<Menu.Popup className="border-border bg-background min-w-48 origin-(--transform-origin) rounded-2xl border py-1 shadow-lg outline-hidden transition-[scale,opacity] duration-100 data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0 overflow-hidden">
+								<Menu.Popup className="border-border bg-background min-w-48 origin-(--transform-origin) overflow-hidden rounded-2xl border py-1 shadow-lg outline-hidden transition-[scale,opacity] duration-100 data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.98] data-starting-style:opacity-0">
 									{navLinks.map((link) => (
 										<Menu.Item
 											key={link.label}

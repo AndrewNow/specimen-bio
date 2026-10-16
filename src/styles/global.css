@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import 'inter-ui/inter-display-latin.css';
 
 @theme {
 	--font-sans: 'InterDisplay', ui-sans-serif, system-ui, sans-serif;
@@ -123,5 +122,26 @@ body {
 		animation-duration: 0.01ms !important;
 		animation-iteration-count: 1 !important;
 		transition-duration: 0.01ms !important;
+	}
+}
+
+/* Static stand-in for the hero shader until that chunk loads. */
+.hero-shader-fallback {
+	background:
+		radial-gradient(55% 45% at 18% 42%, #a3a3a333, transparent 70%),
+		radial-gradient(42% 38% at 78% 62%, #a56a552e, transparent 68%),
+		radial-gradient(30% 28% at 48% 28%, #d1d2d040, transparent 70%), #ffffff;
+}
+
+.hero-shader {
+	animation: hero-shader-in 0.8s ease-out;
+}
+
+@keyframes hero-shader-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
 	}
 }

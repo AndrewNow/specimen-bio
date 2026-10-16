@@ -1,7 +1,26 @@
 ---
 import '../styles/global.css';
+import interRegular from 'inter-ui/display-latin/InterDisplay-Regular-subset.woff2';
+import interMedium from 'inter-ui/display-latin/InterDisplay-Medium-subset.woff2';
 import { CookieConsent } from '../components/CookieConsent';
 import { GA_MEASUREMENT_ID } from '../lib/analytics';
+
+const fontFaceCss = `
+@font-face {
+	font-family: "InterDisplay";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("${interRegular}") format("woff2");
+}
+@font-face {
+	font-family: "InterDisplay";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url("${interMedium}") format("woff2");
+}
+`;
 
 interface Props {
 	title?: string;
@@ -21,6 +40,9 @@ const {
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+		<link rel="preload" href={interRegular} as="font" type="font/woff2" crossorigin />
+		<style is:inline set:html={fontFaceCss}></style>
 		<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png" />
 		<link rel="apple-touch-icon" sizes="256x256" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
@@ -51,17 +73,32 @@ const {
 				wait_for_update: 500,
 			});
 
+			var analyticsLoaded = false;
+			window.loadSpecimenAnalytics = function () {
+				if (analyticsLoaded) return;
+				analyticsLoaded = true;
+				var script = document.createElement('script');
+				script.async = true;
+				script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_MEASUREMENT_ID;
+				document.head.appendChild(script);
+				gtag('js', new Date());
+				gtag('config', GA_MEASUREMENT_ID);
+			};
+
 			try {
 				var stored = localStorage.getItem('specimenbio-cookie-consent');
-				if (stored === 'granted' || stored === 'denied') {
-					gtag('consent', 'update', { analytics_storage: stored });
+				if (stored === 'granted') {
+					gtag('consent', 'update', { analytics_storage: 'granted' });
+					var start = function () {
+						window.loadSpecimenAnalytics();
+					};
+					if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 3000 });
+					else window.addEventListener('load', start, { once: true });
+				} else if (stored === 'denied') {
+					gtag('consent', 'update', { analytics_storage: 'denied' });
 				}
 			} catch (_) {}
-
-			gtag('js', new Date());
-			gtag('config', GA_MEASUREMENT_ID);
 		</script>
-		<script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
 	</head>
 	<body class="bg-background text-foreground min-h-dvh font-sans antialiased">
 		<div class="root">

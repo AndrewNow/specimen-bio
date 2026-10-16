@@ -8,7 +8,19 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-	adapter: vercel(),
+	adapter: vercel({
+		// Cache server-rendered pages at the edge. The first request after
+		// `expiration` regenerates in the background, so CMS edits show up
+		// within about a minute without making every visit wait on Sanity.
+		isr: {
+			expiration: 60,
+			exclude: [/^\/api(?:\/|$)/, /^\/studio(?:\/|$)/],
+		},
+	}),
+	prefetch: {
+		prefetchAll: true,
+		defaultStrategy: 'hover',
+	},
 	integrations: [
 		sanity({
 			projectId: 'gos2rlzf',

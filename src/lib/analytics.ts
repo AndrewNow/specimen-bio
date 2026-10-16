@@ -10,6 +10,7 @@ declare global {
 	interface Window {
 		dataLayer: unknown[];
 		gtag: (...args: unknown[]) => void;
+		loadSpecimenAnalytics?: () => void;
 	}
 }
 
@@ -25,10 +26,10 @@ export function setStoredConsent(value: CookieConsentValue) {
 }
 
 export function updateAnalyticsConsent(value: CookieConsentValue) {
-	if (typeof window.gtag !== 'function') return;
-	window.gtag('consent', 'update', {
+	window.gtag?.('consent', 'update', {
 		analytics_storage: value,
 	});
+	if (value === 'granted') window.loadSpecimenAnalytics?.();
 }
 
 export function openCookieConsent() {
